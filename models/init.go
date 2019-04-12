@@ -19,3 +19,13 @@ func TableName(name string) string  {
 func BackendUserTBName() string  {
 	return TableName("backend_user")
 }
+
+//  获取角色与用户多对多关系表
+func RoleBackendUserTBName() string  {
+	return TableName("role_backenduser_rel")
+}
+
+//获取角色 表
+func RoleTBName() string {
+	return TableName("role")
+}
