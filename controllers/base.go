@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"strings"
 	"github.com/astaxie/beego"
 	"github.com/hello/models"
+	"github.com/hello/enums"
 	)
 
 
@@ -32,4 +34,45 @@ func (c *BaseController) checkLogin()  {
 		c.StopRun()
 
 	}
+}
+func (c *BaseController) jsonResult(code enums.JsonResultCode,msg string,obj interface{}){
+	r := &models.JsonResult{code,msg,obj}
+	c.Data["json"] = r
+	c.ServeJSON()
+	c.StopRun()
+}
+
+// 设置模板
+func (c *BaseController) setTpl(template ...string){
+	var tplName string
+	layout :="shared/layout_page.html"
+	switch  {
+	case len(template) == 1:
+		tplName =template[0]
+	case len(template) == 2:
+		tplName =template[0]
+		layout = template[1]
+	default:
+		// 不要Controller 这个10字符
+		ctrlName := strings.ToLower(c.controllerName[0:len(c.controllerName)-10])
+		actionName := strings.ToLower(c.actionName)
+		tplName = ctrlName+"/"+actionName +".html"
+	}
+	c.Layout = layout
+	c.TplName = tplName
+}
+
+//setBackendUser2Session 获取用户信息 *包括资源(UrlFor) 保存至Session
+func (c *BaseController) setBackendUser2Session(userId int) error{
+	m,err :=models.BackendUserOne(userId)
+	if err!=nil{
+		return err
+	}
+	//获取 这个用户能获取到的所有资源列表
+	resourceList :=models.ResourceTreeGridByUserId(userId,1000)
+	for _,item :=range resourceList{
+		m.ResourceUrlForList = append(m.ResourceUrlForList,strings.TrimSpace(item.UrlFor))
+	}
+	c.SetSession("backenduser",*m)
+	return nil
 }

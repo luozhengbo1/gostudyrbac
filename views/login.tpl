@@ -6,7 +6,7 @@
         </div>
         <div class="control-group">
 
-            <!-- Tex    t input-->
+            <!-- Tex     input-->
             <label class="control-label" for="input01">用户名</label>
             <div class="controls">
                 <input type="text" placeholder="请输入用户名" class="input-xlarge">

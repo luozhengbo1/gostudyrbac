@@ -29,3 +29,18 @@ func RoleBackendUserTBName() string  {
 func RoleTBName() string {
 	return TableName("role")
 }
+
+// 角色与资源多对多关系表
+func RoleResourceRelTBName()  string {
+	return TableName("role_resource_rel")
+}
+
+// ResourceTBName  获取 Resource 对应的表名称
+func ResourceTBName() string  {
+	return TableName("resource")
+}
+
+// RoleBackendUserRelTBName 角色与用户多对多关系表
+func RoleBackendUserRelTBName() string {
+	return TableName("role_backenduser_rel")
+}

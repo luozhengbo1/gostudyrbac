@@ -1,5 +1,6 @@
 package models
 
+import "github.com/astaxie/beego/orm"
 //角色查询结构体 y用于搜索的类
 type RoleQueryParam struct {
 	BaseQueryParam
